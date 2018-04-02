@@ -4,18 +4,20 @@
              version="2.0">
     <persistence-unit name="bazaDanychSeriwsu" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>Model.TAdresEntity</class>
-        <class>Model.TKlientEntity</class>
-        <class>Model.TKontaktEntity</class>
-        <class>Model.TSprzetEntity</class>
-        <class>Model.TZlecenieEntity</class>
+        <class>Model.AdresEntity</class>
+        <class>Model.KlientEntity</class>
+        <class>Model.KontaktEntity</class>
+        <class>Model.SprzetEntity</class>
+        <class>Model.ZlecenieEntity</class>
+
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ManagerSerwisu2"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+
             <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/ManagerSerwisu2"/>
             <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/ManagerSerwisu2"/>

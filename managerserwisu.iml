@@ -6,6 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
+          <factory-entry name="bazaDanychSeriwsu" />
           <factory-entry name="manager1" value="df549f1e-073b-4f10-9df0-aa207e84316f" />
           <factory-entry name="noname-a.xml@0" value="df549f1e-073b-4f10-9df0-aa207e84316f" />
         </datasource-mapping>

@@ -1,0 +1,4 @@
+CREATE TRIGGER tr_generowanie_numer_zgloszenia
+AFTER INSERT ON t_zlecenie
+FOR EACH ROW
+EXECUTE PROCEDURE f_generowanie_numer_zgloszenia();

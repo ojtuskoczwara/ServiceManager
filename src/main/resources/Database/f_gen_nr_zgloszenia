@@ -1,0 +1,6 @@
+CREATE OR REPLACE FUNCTION f_generowanie_numer_zgloszenia() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE t_zlecenie SET zgloszenie_numer = (CONCAT('{', to_char(current_date, 'YYYY/MM/DD'), '/', NEW.zlecenie_id, '}'))::character varying[]  WHERE zlecenie_id = NEW.zlecenie_id;
+RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;

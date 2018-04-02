@@ -1,0 +1,120 @@
+-- Create tables section -------------------------------------------------
+
+-- Table t_sprzet
+
+CREATE TABLE "t_sprzet"(
+ "sprzet_id" Serial NOT NULL,
+ "rodzaj" Character varying(20) NOT NULL,
+ "marka" Character varying(20) NOT NULL,
+ "model" Character varying(20),
+ "numer_seryjny" Character varying(40)
+)
+;
+
+-- Add keys for table t_sprzet
+
+ALTER TABLE "t_sprzet" ADD CONSTRAINT "Key1" PRIMARY KEY ("sprzet_id")
+;
+
+ALTER TABLE "t_sprzet" ADD CONSTRAINT "rodzaj" UNIQUE ("rodzaj")
+;
+
+ALTER TABLE "t_sprzet" ADD CONSTRAINT "marka" UNIQUE ("marka")
+;
+
+-- Table t_klient
+
+CREATE TABLE "t_klient"(
+ "klient_id" Serial NOT NULL,
+ "imie" Character varying(20),
+ "nazwisko" Character varying(30),
+ "firma" Character varying(40),
+ "kontakt_id" Integer NOT NULL,
+ "adres_id" Integer NOT NULL
+)
+;
+
+-- Add keys for table t_klient
+
+ALTER TABLE "t_klient" ADD CONSTRAINT "Key2" PRIMARY KEY ("klient_id","kontakt_id","adres_id")
+;
+
+-- Table t_adres
+
+CREATE TABLE "t_adres"(
+ "adres_id" Serial NOT NULL,
+ "ulica" Character varying(30) NOT NULL,
+ "numer_zamieszkania" Character varying(10) NOT NULL,
+ "kod_pocztowy" Character varying(7) NOT NULL,
+ "miejscowosc" Character varying(30) NOT NULL
+)
+;
+
+-- Add keys for table t_adres
+
+ALTER TABLE "t_adres" ADD CONSTRAINT "Key3" PRIMARY KEY ("adres_id")
+;
+
+-- Table t_kontakt
+
+CREATE TABLE "t_kontakt"(
+ "kontakt_id" Serial NOT NULL,
+ "numer_kontaktowy" Character varying(15) NOT NULL,
+ "email" Character varying(50)
+)
+;
+
+-- Add keys for table t_kontakt
+
+ALTER TABLE "t_kontakt" ADD CONSTRAINT "Key4" PRIMARY KEY ("kontakt_id")
+;
+
+-- Table t_zlecenie
+
+CREATE TABLE "t_zlecenie"(
+ "zlecenie_id" Serial NOT NULL,
+ "klient_nazwa_skrocona" Character varying(30) NOT NULL,
+ "klient_opis_problemu" Text,
+ "serwis_opis_usterki" Text,
+ "serwis_opis_wykonanych_prac" Text,
+ "data_przyjecia" Date NOT NULL,
+ "data_wykonania_uslugi" Date,
+ "data_wydania" Date,
+ "zaplacone" Boolean,
+ "zgloszenie_numer" Character varying(15),
+ "kontakt_id" Integer,
+ "sprzet_id" Integer
+)
+;
+
+-- Create indexes for table t_zlecenie
+
+CREATE INDEX "IX_Relationship8" ON "t_zlecenie" ("kontakt_id")
+;
+
+CREATE INDEX "IX_Relationship9" ON "t_zlecenie" ("sprzet_id")
+;
+
+-- Add keys for table t_zlecenie
+
+ALTER TABLE "t_zlecenie" ADD CONSTRAINT "Key5" PRIMARY KEY ("zlecenie_id")
+;
+ALTER TABLE "t_zlecenie" ADD CONSTRAINT "Chk_data_wykonania_uslugi" CHECK (data_wykonania_uslugi >= data_przyjecia)
+;
+ALTER TABLE "t_zlecenie" ADD CONSTRAINT "Chk_data_wydania" CHECK (data_wydania >= data_przyjecia AND data_wydania >= data_wykonania_uslugi)
+;
+-- Create foreign keys (relationships) section -------------------------------------------------
+
+ALTER TABLE "t_zlecenie" ADD CONSTRAINT "Relationship8" FOREIGN KEY ("kontakt_id") REFERENCES "t_kontakt" ("kontakt_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "t_zlecenie" ADD CONSTRAINT "Relationship9" FOREIGN KEY ("sprzet_id") REFERENCES "t_sprzet" ("sprzet_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "t_klient" ADD CONSTRAINT "Relationship10" FOREIGN KEY ("kontakt_id") REFERENCES "t_kontakt" ("kontakt_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "t_klient" ADD CONSTRAINT "Relationship11" FOREIGN KEY ("adres_id") REFERENCES "t_adres" ("adres_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+
